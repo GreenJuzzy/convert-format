@@ -43,12 +43,13 @@ var convert = async (data) => new Promise((resolve, reject) => {
     data = data.split("\n")
 
     data.forEach((line, lineNumber) => {
-        var matching = line.match(/execute\s(@s|@e|@r|@p|@a)(((\[.*?)\])?)(~| ~|){3}/g)
+        var matching = line.match(/execute\s(@s|@e|@r|@p|@a|@selector)(((\[.*?)\])?)(~| ~|){3}/g)
         if (!matching) return;
 
         matching.forEach((value, matchNumber) => {
             var selector = value.match(/(@s|@e|@r|@p|@a)/)[0]
             var options = value.match(/\[.*?\]/g)
+
 
             data[lineNumber] = data[lineNumber].replace(value, `execute as ${selector}${options ?? ""} run`)
         })
